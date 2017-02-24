@@ -1,67 +1,62 @@
-# Hacker News App
+# 代码笔记
 
-首个使用 Weex 和 Vue 开发的 Hacker News 原生应用。
+代码阅读笔记  
 
-## 编译项目文件
+## webpack.config.js
 
-安装依赖：
-
-```
-npm install
-```
-
-编译代码：
-
-```bash
-# 生成 Web 平台和 native 平台可用的 bundle 文件
-# 位置：
-# dist/index.web.js
-# dist/index.web.js
-npm run build
-
-# 监听模式的 npm run build
-npm run dev
-```
-
-拷贝 bundle 文件：
-
-```bash
-# 将生成的 bundle 文件拷贝到 Android 项目的资源目录
-npm run copy:android
-
-# 将生成的 bundle 文件拷贝到 iOS 项目的资源目录
-npm run copy:ios
-
-# run both copy:andriod and copy:ios
-npm run copy
-```
-
-### 启动 Web 服务
+定义了webpack打包的文件输出路径，以及export webConfig、weexConfig两个变量
 
 ```
-npm run serve
+var webConfig = getBaseConfig()
+webConfig.output.filename = '[name].web.js'
+webConfig.module.loaders[1].loaders.push('vue')
+
+var weexConfig = getBaseConfig()
+weexConfig.output.filename = '[name].weex.js'
+weexConfig.module.loaders[1].loaders.push('weex')
+
+module.exports = [webConfig, weexConfig]
 ```
-
-启动服务后会监听 1337 端口，访问 http://127.0.0.1:1337/index.html 即可在浏览器中预览页面。
-
- > 注： 当前 index.html 的例子中使用的是 Weex 内置的 web 渲染器渲染页面，还未使用 Vue。
-
-### 启动 Android 项目
-
-首先应该安装 [Android Studio](https://developer.android.com/studio/index.html) 和必要的 Android SDK，配置好基本的开发环境。
-
-使用 Android Studio 打开 `android` 目录中的项目，等待自动安装完依赖以后，即可启动模拟器或者真机预览页面。
-
-### 启动 iOS 项目
-
-首先应该配置好 [iOS 开发环境](https://developer.apple.com/library/content/documentation/IDEs/Conceptual/AppStoreDistributionTutorial/Setup/Setup.html) 并且安装 [CocoaPods](https://guides.cocoapods.org/using/getting-started.html) 工具。
-
-进入 `ios` 目录，使用 CocoaPods 安装依赖：
-
+## package.json  
+定义了包的依赖以及各个npm命令
 ```
-pod install
+    "build": "webpack",
+    "dev": "webpack --watch",
+    "copy:android": "cp dist/index.weex.js android/app/src/main/assets/index.js",
+    "copy:ios": "cp dist/index.weex.js ios/assets/index.js",
+    "copy": "npm run copy:android && npm run copy:ios",
+    "serve": "serve -p 8080",
+    "test": "echo \"Error: no test specified\" && exit 1"
 ```
+## router.js
+定义了vue router   
+```
+// Story view factory
+function createStoriesView (type) {
+  return {
+    name: `${type}-stories-view`,
+    render (createElement) {
+      return createElement(StoriesView, { props: { type }})
+    }
+  }
+}
+```
+上一段代码待细看
 
-使用 Xcode 打开 `ios` 目录中的项目（`HackerNews.xcworkspace`），然后即可启动模拟器预览页面。
+## entry.js
+入口JS?  
+导入了各个JS文件，注册mix混合，注册store和route到子component，在任意地方使用this.$router和this.$store  
 
- > 注：如果想要在真机上查看效果，还需要配置开发者签名等信息。
+## App.vue
+定义<router-view>，导出back函数
+
+## /views /store
+views文件夹定义不同的页面，包含了components中提供的基本页面    
+store文件夹定义了基本的函数，如fetch函数  
+mixins文件夹定义了jump函数，用于页面跳转(基于router实现)  
+filters定义了一些util函数  
+components文件夹定义了一些基本的vue  
+dist文件夹保存了生成的js文件  
+
+> 注：/components和/views需细看
+>vuex

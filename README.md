@@ -1,9 +1,6 @@
-# Hacker News App
+# goodtime-terminal
 
-[中文版说明文档](./README.zh.md)
-
-A mobile app for [Hacker News](https://news.ycombinator.com/), which is powered by Weex and Vue.
-
+一个基于weex和vue.js开发的移动应用，参照weex-team/Hacker News(https://github.com/weexteam/weex-hackernews)开发。 
 ## Compile
 
 Install the dependencies:
