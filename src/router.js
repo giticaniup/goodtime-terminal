@@ -25,6 +25,7 @@ export default new Router({
     { path: '/show', component: createStoriesView('show') },
     { path: '/ask', component: createStoriesView('ask') },
     { path: '/job', component: createStoriesView('job') },
+    { path: '/job', component: createStoriesView('job') },
     { path: '/article/:url(.*)?', component: ArticleView },
     { path: '/item/:id(\\d+)', component: CommentView },
     { path: '/user/:id', component: UserView },

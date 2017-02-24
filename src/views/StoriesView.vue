@@ -1,6 +1,7 @@
 <template>
   <div class="stories-view" append="tree">
     <app-header></app-header>
+    <text>微信签到系统</text>
     <list class="story-list" @loadmore="loadMoreStories" loadmoreoffset="50">
       <cell class="story-cell" v-for="story in stories" :key="story.id" append="tree">
         <story :story="story"></story>
