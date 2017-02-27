@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import StoriesView from './views/StoriesView.vue'
 import ArticleView from './views/ArticleView.vue'
 import CommentView from './views/CommentView.vue'
+import SignInView from './views/SignInView.vue'
 import UserView from './views/UserView.vue'
 
 Vue.use(Router)
@@ -25,10 +26,10 @@ export default new Router({
     { path: '/show', component: createStoriesView('show') },
     { path: '/ask', component: createStoriesView('ask') },
     { path: '/job', component: createStoriesView('job') },
-    { path: '/job', component: createStoriesView('job') },
+    { path: '/signIn', component: SignInView },
     { path: '/article/:url(.*)?', component: ArticleView },
     { path: '/item/:id(\\d+)', component: CommentView },
     { path: '/user/:id', component: UserView },
-    { path: '/', redirect: '/top' }
+    { path: '/', redirect: '/signIn' }
   ]
 })
